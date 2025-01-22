@@ -20,9 +20,8 @@ use Illuminate\Support\Facades\Hash;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static ?string $navigationIcon = 'heroicon-o-user';
+    protected static ?string $modelLabel = 'Usuarios';
 
     public static function form(Form $form): Form
     {
@@ -40,7 +39,6 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-
                 TextColumn::make('name')->label('Nombre')->sortable(),
                 TextColumn::make('email')->label('Correo electrónico'),
             ])
