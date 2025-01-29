@@ -14,8 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
-
-
+use Parfaitementweb\FilamentCountryField\Forms\Components\Country;
 
 class EmpresaResource extends Resource
 {
@@ -29,10 +28,10 @@ class EmpresaResource extends Resource
             ->schema([
                 TextInput::make('nombre')->label('Nombre')->required(),
                 TextInput::make('cif_nif')->label('CIF')->required(),
-                TextInput::make('telefono')->label('Teléfono')->required(),
+                TextInput::make('telefono')->label('Teléfono')->tel()->length(9)->required(),
                 TextInput::make('direccion')->label('Dirección')->required(),
                 TextInput::make('codigo_postal')->label('Código Postal')->required(),
-                TextInput::make('pais')->label('País')->required(),
+                Country::make('pais')->label('País')->required(),
 
             ]);
     }
