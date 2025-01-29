@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('cif_nif');
             $table->string('telefono');
             $table->string('direccion');
-            $table->string('codigo_postal');
+            $table->integer('codigo_postal');
             $table->string('pais');
             $table->timestamps();
         });

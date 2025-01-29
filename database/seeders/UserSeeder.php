@@ -18,6 +18,8 @@ class UserSeeder extends Seeder
             'name' => 'Lau',
             'email' => 'lau@gmail.com',
             'password' => Hash::make('1234'),
+            'empresa_id'=>1,
+
         ]);
     }
 }
