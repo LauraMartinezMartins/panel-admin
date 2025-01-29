@@ -15,6 +15,7 @@ use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
+use Filament\Forms\Components\Select;
 
 
 class UserResource extends Resource
@@ -23,15 +24,17 @@ class UserResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user';
     protected static ?string $modelLabel = 'Usuarios';
 
+    //TODO darle una vuelta a hidden de la contraseña, que se muestre en editar o que se mande un email para reestablecerla
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 TextInput::make('name')->label('Nombre')->required(),
                 TextInput::make('email')->email()->label('Correo electrónico')->required(),
-                TextInput::make('password')->password()->label('Contraseña')->dehydrateStateUsing(fn ($state) => Hash::make($state))
-                ->dehydrated(fn ($state) => filled($state))
-                ->required(fn (string $context): bool => $context === 'create'),
+                TextInput::make('password')->password()->label('Contraseña')->dehydrateStateUsing(fn($state) => Hash::make($state))
+                    ->dehydrated(fn($state) => filled($state))
+                    ->hidden(fn(string $context): bool => $context === 'edit'),
+                Select::make('empresa_id')->relationship('empresa', 'nombre'),
             ]);
     }
 
@@ -41,6 +44,7 @@ class UserResource extends Resource
             ->columns([
                 TextColumn::make('name')->label('Nombre')->sortable(),
                 TextColumn::make('email')->label('Correo electrónico'),
+                TextColumn::make('empresa.nombre')->label('Empresa'),
             ])
             ->filters([
                 //
@@ -50,7 +54,7 @@ class UserResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
